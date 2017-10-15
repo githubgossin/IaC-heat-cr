@@ -8,7 +8,7 @@ apt-get -y install puppetserver
 /opt/puppetlabs/bin/puppet resource service puppetserver ensure=stopped enable=true
 # configure puppet agent, and puppetserver autosign
 /opt/puppetlabs/bin/puppet config set server manager.borg.trek --section main
-/opt/puppetlabs/bin/puppet config set autosign false --section master
+/opt/puppetlabs/bin/puppet config set autosign true --section master
 # keys for hiera-eyaml TBA...
 # r10 and control-repo:
 /opt/puppetlabs/bin/puppet module install puppet-r10k
@@ -17,7 +17,7 @@ class { 'r10k':
   sources => {
     'puppet' => {
       'remote'  => 'https://github.com/githubgossin/control-repo-cr.git',
-      'basedir' => "/etc/puppetlabs/code/environments",
+      'basedir' => '/etc/puppetlabs/code/environments',
       'prefix'  => false,
     },
   },
