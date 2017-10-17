@@ -15,19 +15,11 @@ parameters:
     type: string
     description: Name of image to use for servers
     default: Ubuntu Server 16.04 LTS (Xenial Xerus) amd64
-  image_windows:
-    type: string
-    description: Name of image to use for servers
-    default: Windows Server 2016 Std Eval
   flavor_manager:
     type: string
     description: Flavor to use for servers
     default: m1.large
   flavor_monitor:
-    type: string
-    description: Flavor to use for servers
-    default: m1.large
-  flavor_dir01:
     type: string
     description: Flavor to use for servers
     default: m1.large
@@ -76,9 +68,6 @@ parameters:
     description: End of internal network IP address allocation pool
     default: 192.168.190.199
   sec_group_linux:
-    type: comma_delimited_list
-    description: Security groups
-  sec_group_windows:
     type: comma_delimited_list
     description: Security groups
 
@@ -179,46 +168,9 @@ resources:
       floating_network: { get_param: public_net }
       port_id: { get_resource: monitor_port }
 
-  dir01:
-    type: OS::Nova::Server
-    properties:
-      name: dir01
-      image: { get_param: image_windows }
-      flavor: { get_param: flavor_dir01 }
-      key_name: { get_param: key_name }
-      networks:
-        - port: { get_resource: dir01_port_admin }
-        - port: { get_resource: dir01_port_internal }
-
-  dir01_port_admin:
-    type: OS::Neutron::Port
-    properties:
-      network_id: { get_resource: admin_net }
-      security_groups: { get_param: sec_group_windows }
-      fixed_ips:
-        - subnet_id: { get_resource: admin_subnet }
-
-  dir01_port_internal:
-    type: OS::Neutron::Port
-    properties:
-      network_id: { get_resource: internal_net }
-      security_groups: { get_param: sec_group_windows }
-      fixed_ips:
-        - subnet_id: { get_resource: internal_subnet }
-
-  dir01_floating_ip:
-    type: OS::Neutron::FloatingIP
-    properties:
-      floating_network: { get_param: public_net }
-      port_id: { get_resource: dir01_port_internal }
-
 outputs:
   manager_admin_ip:
     value: { get_attr: [manager, networks, get_param: admin_net_name, 0]}
-  dir01_admin_ip:
-    value: { get_attr: [dir01, networks, get_param: admin_net_name, 0]}
-  dir01_internal_ip:
-    value: { get_attr: [dir01, networks, get_param: internal_net_name, 0]}
   admin_net:
     value: { get_resource: admin_net }
   admin_subnet:
