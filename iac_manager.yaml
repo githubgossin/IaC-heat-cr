@@ -19,10 +19,6 @@ parameters:
     type: string
     description: Flavor to use for servers
     default: m1.large
-  flavor_monitor:
-    type: string
-    description: Flavor to use for servers
-    default: m1.large
   public_net:
     type: string
     description: >
@@ -143,30 +139,6 @@ resources:
     properties:
       floating_network: { get_param: public_net }
       port_id: { get_resource: manager_port }
-
-  monitor:
-    type: OS::Nova::Server
-    properties:
-      name: monitor
-      image: { get_param: image_linux }
-      flavor: { get_param: flavor_monitor }
-      key_name: { get_param: key_name }
-      networks:
-        - port: { get_resource: monitor_port }
-
-  monitor_port:
-    type: OS::Neutron::Port
-    properties:
-      network_id: { get_resource: admin_net }
-      security_groups: { get_param: sec_group_linux }
-      fixed_ips:
-        - subnet_id: { get_resource: admin_subnet }
-
-  monitor_floating_ip:
-    type: OS::Neutron::FloatingIP
-    properties:
-      floating_network: { get_param: public_net }
-      port_id: { get_resource: monitor_port }
 
 outputs:
   manager_admin_ip:

@@ -32,13 +32,7 @@ parameters:
   admin_subnet:
     type: string
     description: UUID of admin subnet created in base template (192.168.180.0/24)
-  other_net:
-    type: string
-    description: UUID of other net created in base template (iac_other_net)
-  other_subnet:
-    type: string
-    description: UUID of other subnet created in base template (192.168.190.0/24)
-  dir01_ip:
+  dns_ip:
     type: string
     description: IP address of server dir01 created in base template
   manager_ip:
@@ -56,14 +50,13 @@ resources:
       key_name: { get_param: key_name }
       networks:
         - port: { get_resource: server_port_admin }
-        - port: { get_resource: server_port_other }
       user_data_format: RAW
       user_data:
         str_replace:
-          template: { get_file: ubuntu_boot.bash }
+          template: { get_file: ubuntu_boot_one_nic.bash }
           params:
             manager_ip_address: { get_param: manager_ip }
-            dir01_ip_address: { get_param: dir01_ip }
+            dns_ip_address: { get_param: dns_ip }
 
   server_port_admin:
     type: OS::Neutron::Port
@@ -73,17 +66,9 @@ resources:
       fixed_ips:
         - subnet_id: { get_param: admin_subnet }
 
-  server_port_other:
-    type: OS::Neutron::Port
-    properties:
-      network_id: { get_param: other_net }
-      security_groups: { get_param: sec_group_linux }
-      fixed_ips:
-        - subnet_id: { get_param: other_subnet }
-
   server_floating_ip:
     type: OS::Neutron::FloatingIP
     properties:
       floating_network: { get_param: public_net }
-      port_id: { get_resource: server_port_other }
+      port_id: { get_resource: server_port_admin }
 
