@@ -40,7 +40,7 @@ parameters:
 resources:
 
   test:
-    type: lib/managed_linux_server.yaml
+    type: lib/managed_linux_server_two_nics.yaml
     properties:
       key_name:          { get_param: key_name }
       server_name:       test
@@ -60,7 +60,7 @@ resources:
     properties:
       count: 15
       resource_def:
-        type: lib/managed_linux_server.yaml
+        type: lib/managed_linux_server_two_nics.yaml
         properties:
           server_name:       hpc-%index%
           key_name:          { get_param: key_name }

@@ -31,6 +31,7 @@ echo "$(ip a | grep -Eo 'inet ([0-9]*\.){3}[0-9]*' | tr -d 'inet ' | grep -v '^1
 /opt/puppetlabs/bin/puppet resource service puppetserver ensure=running enable=true
 /opt/puppetlabs/bin/puppet agent -t # request certificate
 /opt/puppetlabs/bin/puppet agent -t # configure manager
+/opt/puppetlabs/bin/puppet agent -t # once more to update exported resources
 /opt/puppetlabs/bin/puppet resource service puppet ensure=running enable=true
 # permanent fix for domainname
 cat <<EOF >> /etc/dhcp/dhclient.conf
@@ -38,4 +39,5 @@ supersede domain-name "borg.trek";
 supersede domain-name-servers 127.0.0.1;
 EOF
 reboot
+wc_notify --data-binary '{"status": "SUCCESS"}'
 
