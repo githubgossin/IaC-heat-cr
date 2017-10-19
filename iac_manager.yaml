@@ -171,7 +171,7 @@ outputs:
     value: { get_resource: internal_net }
   other_subnet:
     value: { get_resource: internal_subnet }
-  curl_cli:
-    value: { get_attr: ['wait_handle', 'curl_cli'] }
-  wc_data:
-    value: { get_attr: ['wait_condition', 'data'] }
+#  curl_cli:
+#    value: { get_attr: ['wait_handle', 'curl_cli'] }
+#  wc_data:
+#    value: { get_attr: ['wait_condition', 'data'] }
