@@ -8,6 +8,7 @@ apt-get -y install puppetserver
 /opt/puppetlabs/bin/puppet resource service puppetserver ensure=stopped enable=true
 # configure puppet agent, and puppetserver autosign
 /opt/puppetlabs/bin/puppet config set server manager.borg.trek --section main
+/opt/puppetlabs/bin/puppet config set runinterval 300 --section main
 /opt/puppetlabs/bin/puppet config set autosign true --section master
 # keys for hiera-eyaml TBA...
 # r10 and control-repo:
