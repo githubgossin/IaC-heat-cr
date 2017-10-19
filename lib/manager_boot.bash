@@ -39,5 +39,5 @@ supersede domain-name "borg.trek";
 supersede domain-name-servers 127.0.0.1;
 EOF
 reboot
-wc_notify --data-binary '{"status": "SUCCESS"}'
+#wc_notify --data-binary '{"status": "SUCCESS"}'
 

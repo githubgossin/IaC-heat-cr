@@ -116,15 +116,17 @@ resources:
       router_id: { get_resource: router }
       subnet_id: { get_resource: internal_subnet }
 
-  wait_condition:
-    type: OS::Heat::WaitCondition
-    properties:
-      handle: {get_resource: wait_handle}
-      count: 1
-      timeout: 1200
-
-  wait_handle:
-    type: OS::Heat::WaitConditionHandle
+# drop wait_condition for now, since
+# https://github.com/jkhelil/Make-wait_condition-work-on-openstack-heat-without-admin-role
+#  wait_condition:
+#    type: OS::Heat::WaitCondition
+#    properties:
+#      handle: {get_resource: wait_handle}
+#      count: 1
+#      timeout: 1200
+#
+#  wait_handle:
+#    type: OS::Heat::WaitConditionHandle
 
   manager:
     type: OS::Nova::Server
@@ -135,12 +137,14 @@ resources:
       key_name: { get_param: key_name }
       networks:
         - port: { get_resource: manager_port }
-      user_data_format: RAW
-      user_data:
-        str_replace:
-          template: { get_file: lib/manager_boot.bash }
-          params:
-            wc_notify: { get_attr: [wait_handle, curl_cli] }
+      user_data: { get_file: lib/manager_boot.bash }
+
+ #     user_data_format: RAW
+ #     user_data:
+ #       str_replace:
+ #         template: { get_file: lib/manager_boot.bash }
+ #         params:
+ #           wc_notify: { get_attr: [ wait_handle, curl_cli ] }
 
   manager_port:
     type: OS::Neutron::Port
@@ -167,9 +171,7 @@ outputs:
     value: { get_resource: internal_net }
   other_subnet:
     value: { get_resource: internal_subnet }
-  wait_manager:
-    value: { get_resource: wait_condition }
   curl_cli:
-    value: { get_attr: [wait_handle, curl_cli] }
+    value: { get_attr: ['wait_handle', 'curl_cli'] }
   wc_data:
-    value: { get_attr: [wait_condition, data] }
+    value: { get_attr: ['wait_condition', 'data'] }
