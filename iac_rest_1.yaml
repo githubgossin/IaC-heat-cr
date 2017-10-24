@@ -58,7 +58,7 @@ resources:
   login:
     type: OS::Heat::ResourceGroup
     properties:
-      count: 15
+      count: 8
       resource_def:
         type: lib/managed_linux_server_two_nics.yaml
         properties:
