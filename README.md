@@ -1,11 +1,12 @@
-# IaC-heat
-Heat templates for the NTNU course [Infrastructure as Code (IaC)](https://www.ntnu.edu/studies/courses/IMT3005).
+# Simple Cyber Range
 
-Your keypair must be provided in `iac_top_env.yaml` and two security groups (in addition to the default group): `linux` and `windows` should exist.
+This is a Heat template to launch a simple cyber range. The servers are initialized based on [this Puppet control repo](https://github.com/githubgossin/control-repo-cr).
 
-`iac_manager` creates the servers `manager`, `monitor` and `dir01` (ad/dns), and two networks: `admin` and `internal`. 
-`iac_rest_1` (which depends on `iac_manager`) creates some servers with interfaces in both networks. Create stack with e.g.
-
+Clone and launch in OpenStack with e.g.
 ```bash
-openstack stack create iac -t iac_top.yaml -e iac_top_env.yaml
+# make sure you have security groups called default and linux
+# edit iac_top_env.yaml and enter name of your keypair
+git clone https://github.com/githubgossin/IaC-heat-cr.git
+cd IaC-hear-cr
+openstack stack create simple_cyber_range -t iac_top.yaml -e iac_top_env.yaml
 ```
