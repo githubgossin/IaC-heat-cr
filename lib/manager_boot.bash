@@ -3,7 +3,7 @@ tempdeb=$(mktemp /tmp/debpackage.XXXXXXXXXXXXXXXXXX) || exit 1
 wget -O "$tempdeb" https://apt.puppetlabs.com/puppet5-release-xenial.deb
 dpkg -i "$tempdeb"
 apt-get update
-apt-get -y install puppetserver
+apt-get -y install puppetserver pwgen
 /opt/puppetlabs/bin/puppet resource service puppet ensure=stopped enable=true
 /opt/puppetlabs/bin/puppet resource service puppetserver ensure=stopped enable=true
 # configure puppet agent, and puppetserver autosign
