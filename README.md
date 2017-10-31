@@ -10,3 +10,6 @@ git clone https://github.com/githubgossin/IaC-heat-cr.git
 cd IaC-hear-cr
 openstack stack create simple_cyber_range -t iac_top.yaml -e iac_top_env.yaml
 ```
+## Troubleshooting
++ uchiwa server 500 error, [debug rabbitmq keys](https://www.rabbitmq.com/troubleshooting-ssl.html)
++ [logstash ssl](https://www.elastic.co/guide/en/beats/filebeat/current/configuring-ssl-logstash.html)
