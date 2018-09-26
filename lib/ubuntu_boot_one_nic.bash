@@ -15,6 +15,6 @@ echo "manager_ip_address manager.borg.trek manager" >> /etc/hosts
 cat <<EOF >> /etc/netplan/50-cloud-init.yaml
             nameservers:
                 search: [borg.trek]
-                addresses: [dir01_ip_address]
+                addresses: [dns_ip_address]
 EOF
 netplan apply

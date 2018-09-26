@@ -40,7 +40,7 @@ parameters:
     description: UUID of other subnet created in base template (192.168.190.0/24)
   dns_ip:
     type: string
-    description: IP address of server dir01 created in base template
+    description: IP address of dns server created in base template
   manager_ip:
     type: string
     description: IP address of server manager created in base template

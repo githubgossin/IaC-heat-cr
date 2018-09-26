@@ -1,5 +1,5 @@
 #ps1_sysnative
-Get-NetAdapter | Set-DnsClientServerAddress -ServerAddresses ("dir01_ip_address")
+Get-NetAdapter | Set-DnsClientServerAddress -ServerAddresses ("dns_ip_address")
 Set-DnsClientGlobalSetting -SuffixSearchList @("borg.trek")
 Get-NetAdapter | Set-DnsClient -ConnectionSpecificSuffix "borg.trek"
 $ErrorActionPreference = "Stop"

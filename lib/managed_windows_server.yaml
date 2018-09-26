@@ -38,9 +38,9 @@ parameters:
   other_subnet:
     type: string
     description: UUID of other subnet created in base template (192.168.190.0/24)
-  dir01_ip:
+  dns_ip:
     type: string
-    description: IP address of server dir01 created in base template
+    description: IP address of dns server created in base template
   manager_ip:
     type: string
     description: IP address of server manager created in base template
@@ -63,7 +63,7 @@ resources:
           template: { get_file: windows_boot.ps1 }
           params:
             manager_ip_address: { get_param: manager_ip }
-            dir01_ip_address: { get_param: dir01_ip }
+            dns_ip_address: { get_param: dns_ip }
 
   server_port_admin:
     type: OS::Neutron::Port
