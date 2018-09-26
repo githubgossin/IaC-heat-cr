@@ -15,6 +15,7 @@ apt-get -y install puppetserver pwgen
 /opt/puppetlabs/bin/puppet module install puppet-r10k
 cat <<EOF > /var/tmp/r10k.pp
 class { 'r10k':
+  version => '2.6.4',
   sources => {
     'puppet' => {
       'remote'  => 'https://github.com/githubgossin/control-repo-cr.git',
