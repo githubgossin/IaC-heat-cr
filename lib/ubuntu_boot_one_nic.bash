@@ -1,6 +1,6 @@
 #!/bin/bash -v
 tempdeb=$(mktemp /tmp/debpackage.XXXXXXXXXXXXXXXXXX) || exit 1
-wget -O "$tempdeb" https://apt.puppetlabs.com/puppet5-release-xenial.deb
+wget -O "$tempdeb" https://apt.puppetlabs.com/puppet5-release-bionic.deb
 dpkg -i "$tempdeb"
 apt-get update
 apt-get -y install puppet-agent
@@ -12,9 +12,9 @@ echo "manager_ip_address manager.borg.trek manager" >> /etc/hosts
 /opt/puppetlabs/bin/puppet agent -t # request certificate
 /opt/puppetlabs/bin/puppet agent -t # configure 
 /opt/puppetlabs/bin/puppet resource service puppet ensure=running enable=true
-cat <<EOF >> /etc/dhcp/dhclient.conf
-supersede domain-name "borg.trek";
-supersede domain-name-servers dns_ip_address;
+cat <<EOF >> /etc/netplan/50-cloud-init.yaml
+            nameservers:
+                search: [borg.trek]
+                addresses: [dir01_ip_address]
 EOF
-reboot
-
+netplan apply

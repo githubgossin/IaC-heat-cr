@@ -10,7 +10,7 @@ parameters:
   image_linux:
     type: string
     description: Name of image to use for GNU/Linux servers
-    default: Ubuntu Server 16.04 LTS (Xenial Xerus) amd64
+    default: Ubuntu Server 18.04 LTS (Bionic Beaver) amd64
   sec_group_linux:
     type: comma_delimited_list
     description: Security groups
