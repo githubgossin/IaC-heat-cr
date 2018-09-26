@@ -7,7 +7,7 @@ Clone and launch in OpenStack with e.g.
 # make sure you have security groups called default and linux
 # edit iac_top_env.yaml and enter name of your keypair
 git clone https://github.com/githubgossin/IaC-heat-cr.git
-cd IaC-hear-cr
+cd IaC-heat-cr
 openstack stack create simple_cyber_range -t iac_top.yaml -e iac_top_env.yaml
 ```
 ## Troubleshooting
